@@ -11,9 +11,12 @@
     "storage",
     "tabs",
     "downloads",
-    "sidePanel"
+    "sidePanel",
+    "scripting"
   ],
-  "host_permissions": [],
+  "host_permissions": [
+    "https://*.youtube.com/*"
+  ],
   "action": {
     "default_icon": {
       "16": "public/icons/icon-16.svg",

@@ -52,6 +52,9 @@ export class YouTubeCommentExtractor {
    */
   async fetchComments({ videoId, continuation = null, apiKey }) {
     try {
+      // Add rate limiting delay
+      await new Promise(resolve => setTimeout(resolve, 1000));
+
       const params = {
         headers: {
           'accept': '*/*',
@@ -77,10 +80,14 @@ export class YouTubeCommentExtractor {
         params
       );
 
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
       return await response.json();
     } catch (err) {
       console.error('Error fetching comments:', err);
-      throw err;
+      throw new Error(`Failed to fetch comments: ${err.message}`);
     }
   }
 
@@ -130,22 +137,41 @@ export class YouTubeCommentExtractor {
    */
   async getAllComments(videoId, maxComments = Infinity) {
     try {
+      if (!videoId) {
+        throw new Error('Video ID is required');
+      }
+
       const apiKey = await this.processors.get('getApiKey')();
+      if (!apiKey) {
+        throw new Error('Failed to get YouTube API key');
+      }
+
       let allComments = [];
       let continuation = null;
+      let retryCount = 0;
+      const MAX_RETRIES = 3;
 
       do {
-        const rawData = await this.processors.get('fetchComments')({
-          videoId,
-          continuation,
-          apiKey
-        });
+        try {
+          const rawData = await this.processors.get('fetchComments')({
+            videoId,
+            continuation,
+            apiKey
+          });
 
-        const result = this.processors.get('processComments')(rawData);
-        if (!result) break;
+          const result = this.processors.get('processComments')(rawData);
+          if (!result) break;
 
-        allComments = allComments.concat(result.comments);
-        continuation = result.continuation;
+          allComments = allComments.concat(result.comments);
+          continuation = result.continuation;
+        } catch (error) {
+          retryCount++;
+          if (retryCount >= MAX_RETRIES) {
+            throw error;
+          }
+          // Wait before retrying
+          await new Promise(resolve => setTimeout(resolve, 2000 * retryCount));
+        }
       } while (continuation && allComments.length < maxComments);
 
       return allComments.slice(0, maxComments);

@@ -1,7 +1,11 @@
+import { YouTubeCommentExtractor } from '../modules/feature3/comment-extractor.js';
+import { YouTubeUtils } from '../modules/feature3/youtube-utils.js';
+
 document.addEventListener('DOMContentLoaded', function() {
     const tabItems = document.querySelectorAll('.tab-item');
     const tabContents = document.querySelectorAll('.tab-content');
     const resultContainer = document.getElementById('result-container');
+    const commentExtractor = new YouTubeCommentExtractor();
 
     // Tab switching function
     function switchTab(tabId) {
@@ -22,18 +26,79 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    // Enhanced display result function for comments
+    function displayComments(comments) {
+        const statsDiv = resultContainer.querySelector('.comments-stats');
+        const commentsDiv = resultContainer.querySelector('.comments-list');
+        
+        // Display statistics
+        statsDiv.innerHTML = `
+            <div class="stats-card">
+                <h4>Statistics</h4>
+                <p>Total Comments: ${comments.length}</p>
+            </div>
+        `;
+
+        // Display comments
+        commentsDiv.innerHTML = comments.map(comment => `
+            <div class="comment-card">
+                <div class="comment-header">
+                    <strong>${comment.author.name}</strong>
+                    ${comment.author.isChannelOwner ? '<span class="owner-badge">Owner</span>' : ''}
+                    <span class="comment-date">${comment.publishedAt}</span>
+                </div>
+                <div class="comment-content">${comment.content}</div>
+                <div class="comment-footer">
+                    <span>👍 ${comment.likeCount || '0'}</span>
+                    ${comment.replyCount ? `<span>💬 ${comment.replyCount}</span>` : ''}
+                </div>
+            </div>
+        `).join('');
+    }
+
+    // Enhanced error display
+    function displayError(message) {
+        resultContainer.innerHTML = `
+            <div class="result-error">
+                <h4>Error</h4>
+                <p>${message}</p>
+            </div>
+        `;
+    }
+
     // Action execution function
     async function executeFeature(feature, action) {
         try {
-            const response = await chrome.runtime.sendMessage({
-                type: 'RUN_FEATURE',
-                feature: feature,
-                action: action
-            });
+            if (feature === 'feature3' && action === 'extractComments') {
+                // Get current tab URL
+                const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+                const videoId = YouTubeUtils.extractVideoId(tab.url);
+                
+                if (!videoId) {
+                    throw new Error('Please open a YouTube video page first');
+                }
 
-            displayResult(response.message, 'success');
+                // Show loading state
+                resultContainer.innerHTML = '<div class="loading">Extracting comments...</div>';
+
+                // Get comments limit from input
+                const limitInput = document.getElementById('commentsLimit');
+                const limit = limitInput.value ? parseInt(limitInput.value) : Infinity;
+
+                // Extract comments
+                const comments = await commentExtractor.getAllComments(videoId, limit);
+                displayComments(comments);
+            } else {
+                // Handle other features
+                const response = await chrome.runtime.sendMessage({
+                    type: 'RUN_FEATURE',
+                    feature: feature,
+                    action: action
+                });
+                displayResult(response.message, 'success');
+            }
         } catch (error) {
-            displayResult(error.message, 'error');
+            displayError(error.message);
         }
     }
 
@@ -66,14 +131,14 @@ document.addEventListener('DOMContentLoaded', function() {
             
             // Show loading state
             button.disabled = true;
-            button.innerHTML = 'Processing...';
+            const originalText = button.textContent;
+            button.textContent = 'Processing...';
             
             await executeFeature(feature, action);
             
             // Reset button state
             button.disabled = false;
-            button.innerHTML = button.innerHTML.replace('Processing...', 
-                action.replace(/([A-Z])/g, ' $1').trim());
+            button.textContent = originalText;
         });
     });
 
@@ -94,5 +159,22 @@ document.addEventListener('DOMContentLoaded', function() {
                 switchTab(tabId);
             }
         }
+    });
+
+    // Make sure initial tab is set
+    document.addEventListener('DOMContentLoaded', () => {
+        // Restore last active tab or default to first tab
+        chrome.storage.sync.get(['lastActiveTab'], function(result) {
+            if (result.lastActiveTab) {
+                switchTab(result.lastActiveTab);
+            } else {
+                // Default to first tab if no last active tab
+                const firstTab = document.querySelector('.tab-item');
+                if (firstTab) {
+                    const tabId = firstTab.getAttribute('data-tab');
+                    switchTab(tabId);
+                }
+            }
+        });
     });
 }); 

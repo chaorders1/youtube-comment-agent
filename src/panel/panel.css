@@ -16,6 +16,14 @@
     border-bottom: 1px solid var(--border-color);
 }
 
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
 .tab-item {
     position: relative;
     flex: 1;
@@ -174,4 +182,68 @@
 
 .tab-item:active::before {
     opacity: 0.08;
+}
+
+.input-group {
+    margin-bottom: 1rem;
+}
+
+.input-field {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.comment-card {
+    background: #f8f9fa;
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 12px;
+}
+
+.comment-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.owner-badge {
+    background: #ffd700;
+    padding: 2px 6px;
+    border-radius: 12px;
+    font-size: 12px;
+}
+
+.comment-date {
+    color: #666;
+    font-size: 12px;
+    margin-left: auto;
+}
+
+.comment-content {
+    margin: 8px 0;
+    line-height: 1.4;
+}
+
+.comment-footer {
+    display: flex;
+    gap: 12px;
+    color: #666;
+    font-size: 13px;
+}
+
+.stats-card {
+    background: #e9ecef;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 16px;
+}
+
+.loading {
+    text-align: center;
+    padding: 20px;
+    color: #666;
 } 

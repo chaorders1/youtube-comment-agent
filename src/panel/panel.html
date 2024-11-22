@@ -27,63 +27,56 @@
             </div>
         </nav>
 
-        <!-- Content Area -->
+        <!-- Main Content Area -->
         <main class="content-area">
-            <!-- Transcript Tab Content -->
+            <!-- Comments Tab Content -->
             <div class="tab-content active" id="transcript-content">
-                <div class="feature-card">
-                    <h3>URL Analysis</h3>
-                    <p class="feature-description">Get and analyze the current page URL</p>
-                    <button class="action-button" data-feature="feature1" data-action="getCurrentUrl">
-                        Analyze URL
-                    </button>
-                </div>
-                <div id="result-container" class="result-container">
-                    <p class="placeholder-text">Results will appear here</p>
+                <h2>YouTube Comments Extractor</h2>
+                <p>Extract and analyze comments from YouTube videos</p>
+                <input type="text" id="commentsLimit" placeholder="Number of comments">
+                <button>Extract Comments</button>
+                <div class="comments-container">
+                    <p class="placeholder-text">YouTube comments will appear here</p>
                 </div>
             </div>
 
             <!-- Summary Tab Content -->
             <div class="tab-content" id="summary-content">
-                <div class="feature-card">
-                    <h3>Data Processing</h3>
-                    <p class="feature-description">Process and analyze page data</p>
-                    <button class="action-button" data-feature="feature1" data-action="processData">
-                        Process Data
-                    </button>
+                <h2>Data Processing</h2>
+                <p>Process and analyze page data</p>
+                <button>Process Data</button>
+                <div class="summary-container">
+                    <!-- Summary results will appear here -->
                 </div>
             </div>
 
-            <!-- Notes Tab Content -->
+            <!-- Export Tab Content -->
             <div class="tab-content" id="notes-content">
-                <div class="feature-card">
-                    <h3>Store Data</h3>
-                    <p class="feature-description">Save and manage your notes</p>
-                    <button class="action-button" data-feature="feature1" data-action="storeData">
-                        Save Notes
-                    </button>
+                <h2>Export Text</h2>
+                <p>Export data as text file</p>
+                <button>Export</button>
+                <div class="export-container">
+                    <!-- Export content will appear here -->
                 </div>
             </div>
 
             <!-- AI Chat Tab Content -->
             <div class="tab-content" id="ai-chat-content">
-                <div class="feature-card">
-                    <h3>Export Text</h3>
-                    <p class="feature-description">Export data as text file</p>
-                    <button class="action-button" data-feature="feature2" data-action="exportTxt">
-                        Export
-                    </button>
+                <h2>Store Data</h2>
+                <p>Save and manage your note</p>
+                <button>Save Notes</button>
+                <div class="notes-container">
+                    <!-- Notes content will appear here -->
                 </div>
             </div>
 
             <!-- Upgrade Tab Content -->
             <div class="tab-content" id="upgrade-content">
-                <div class="feature-card">
-                    <h3>Premium Features</h3>
-                    <p class="feature-description">Upgrade to access premium features</p>
-                    <button class="action-button" data-feature="feature2" data-action="processExport">
-                        Upgrade Now
-                    </button>
+                <h2>Premium Features</h2>
+                <p>Upgrade to access premium features</p>
+                <button>Upgrade Now</button>
+                <div class="premium-container">
+                    <!-- Premium features will appear here -->
                 </div>
             </div>
         </main>
