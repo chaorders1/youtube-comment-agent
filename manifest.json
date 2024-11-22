@@ -1,0 +1,43 @@
+{
+  "manifest_version": 3,
+  "name": "Extension Boilerplate",
+  "version": "1.0.0",
+  "description": "A modern, feature-rich boilerplate for Chrome extensions",
+  "background": {
+    "service_worker": "src/background/background.js",
+    "type": "module"
+  },
+  "permissions": [
+    "storage",
+    "tabs",
+    "downloads",
+    "sidePanel"
+  ],
+  "host_permissions": [],
+  "action": {
+    "default_icon": {
+      "16": "public/icons/icon-16.svg",
+      "48": "public/icons/icon-48.svg", 
+      "128": "public/icons/icon-128.svg"
+    }
+  },
+  "side_panel": {
+    "default_path": "src/panel/panel.html"
+  },
+  "icons": {
+    "16": "public/icons/icon-16.svg",
+    "48": "public/icons/icon-48.svg",
+    "128": "public/icons/icon-128.svg"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["src/content/contentScript.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [{
+    "resources": [],
+    "matches": ["<all_urls>"]
+  }]
+}

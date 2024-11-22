@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../styles/global.css">
+    <link rel="stylesheet" href="../styles/themes.css">
+    <link rel="stylesheet" href="panel.css">
+</head>
+<body>
+    <div class="panel-container">
+        <!-- Tab Navigation -->
+        <nav class="tab-navigation">
+            <div class="tab-item active" data-tab="transcript">
+                <span class="tab-text">Transcript</span>
+            </div>
+            <div class="tab-item" data-tab="summary">
+                <span class="tab-text">Summary</span>
+            </div>
+            <div class="tab-item" data-tab="notes">
+                <span class="tab-text">Notes</span>
+            </div>
+            <div class="tab-item" data-tab="ai-chat">
+                <span class="tab-text">AI Chat</span>
+            </div>
+            <div class="tab-item" data-tab="upgrade">
+                <span class="tab-text">Upgrade</span>
+            </div>
+        </nav>
+
+        <!-- Content Area -->
+        <main class="content-area">
+            <!-- Transcript Tab Content -->
+            <div class="tab-content active" id="transcript-content">
+                <div class="feature-card">
+                    <h3>URL Analysis</h3>
+                    <p class="feature-description">Get and analyze the current page URL</p>
+                    <button class="action-button" data-feature="feature1" data-action="getCurrentUrl">
+                        Analyze URL
+                    </button>
+                </div>
+                <div id="result-container" class="result-container">
+                    <p class="placeholder-text">Results will appear here</p>
+                </div>
+            </div>
+
+            <!-- Summary Tab Content -->
+            <div class="tab-content" id="summary-content">
+                <div class="feature-card">
+                    <h3>Data Processing</h3>
+                    <p class="feature-description">Process and analyze page data</p>
+                    <button class="action-button" data-feature="feature1" data-action="processData">
+                        Process Data
+                    </button>
+                </div>
+            </div>
+
+            <!-- Notes Tab Content -->
+            <div class="tab-content" id="notes-content">
+                <div class="feature-card">
+                    <h3>Store Data</h3>
+                    <p class="feature-description">Save and manage your notes</p>
+                    <button class="action-button" data-feature="feature1" data-action="storeData">
+                        Save Notes
+                    </button>
+                </div>
+            </div>
+
+            <!-- AI Chat Tab Content -->
+            <div class="tab-content" id="ai-chat-content">
+                <div class="feature-card">
+                    <h3>Export Text</h3>
+                    <p class="feature-description">Export data as text file</p>
+                    <button class="action-button" data-feature="feature2" data-action="exportTxt">
+                        Export
+                    </button>
+                </div>
+            </div>
+
+            <!-- Upgrade Tab Content -->
+            <div class="tab-content" id="upgrade-content">
+                <div class="feature-card">
+                    <h3>Premium Features</h3>
+                    <p class="feature-description">Upgrade to access premium features</p>
+                    <button class="action-button" data-feature="feature2" data-action="processExport">
+                        Upgrade Now
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script type="module" src="panel.js"></script>
+</body>
+</html> 

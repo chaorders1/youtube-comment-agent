@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Extension Boilerplate</title>
+    <link rel="stylesheet" href="../styles/global.css">
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+    <div class="popup-container">
+        <header>
+            <h2>Extension Settings</h2>
+        </header>
+
+        <main>
+            <div class="feature-item">
+                <label class="toggle">
+                    <input type="checkbox" id="feature1Toggle">
+                    <span class="toggle-slider"></span>
+                    <span class="toggle-label">Feature 1</span>
+                </label>
+                <button id="runFeature1" class="btn btn-run" disabled>Run</button>
+            </div>
+
+            <div class="feature-item">
+                <label class="toggle">
+                    <input type="checkbox" id="feature2Toggle">
+                    <span class="toggle-slider"></span>
+                    <span class="toggle-label">Feature 2</span>
+                </label>
+                <button id="runFeature2" class="btn btn-run" disabled>Run</button>
+            </div>
+
+            <div id="status" class="status-message"></div>
+        </main>
+
+        <footer>
+            <button id="resetBtn" class="btn btn-secondary">Reset</button>
+            <button id="saveBtn" class="btn btn-primary">Save</button>
+        </footer>
+    </div>
+    <script src="popup.js"></script>
+</body>
+</html>
